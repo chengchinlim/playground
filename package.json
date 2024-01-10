@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "nodemon src/app.ts",
-    "lint": "eslint"
+    "lint": "eslint",
+    "start": "node lib/app.js"
   },
   "keywords": [],
   "author": "",
