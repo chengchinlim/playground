@@ -15,4 +15,4 @@ RUN tsc
 
 COPY . .
 
-CMD [ "node", "lib/app.js" ]
+CMD [ "node", "lib/main.js" ]
