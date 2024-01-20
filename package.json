@@ -4,7 +4,8 @@
   "description": "",
   "main": "/lib/app.js",
   "scripts": {
-    "build": "tsc",
+    "prebuild": "rimraf lib",
+    "build": "nest build",
     "dev": "TZ=UTC cross-env NODE_ENV=local nest start --watch",
     "lint": "eslint",
     "start": "node lib/main.js"

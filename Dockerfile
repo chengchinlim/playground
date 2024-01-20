@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:20-alpine
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
@@ -11,8 +11,6 @@ RUN npm ci && npm i -g typescript
 # Bundle app source
 COPY . .
 
-RUN tsc
+RUN npm run build
 
-COPY . .
-
-CMD [ "node", "lib/main.js" ]
+CMD [ "npm", "run", "start" ]
