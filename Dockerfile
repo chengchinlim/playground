@@ -1,4 +1,7 @@
-FROM node:20-alpine
+FROM node:20
+
+# Create app directory
+WORKDIR /usr/src/app
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
@@ -7,7 +10,7 @@ COPY package*.json ./
 
 #RUN npm install
 # If you are building your code for production
-RUN npm ci && npm cache clean --force
+RUN npm ci && npm install -g @nestjs/cli
 # Bundle app source
 COPY . .
 
