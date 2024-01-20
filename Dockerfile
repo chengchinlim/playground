@@ -7,7 +7,7 @@ COPY package*.json ./
 
 #RUN npm install
 # If you are building your code for production
-RUN npm ci && && npm cache clean --force
+RUN npm ci && npm cache clean --force
 # Bundle app source
 COPY . .
 
