@@ -17,4 +17,9 @@ export default () => ({
   PORT: parseInt(loadParam("PORT", 7778), 10),
 
   JWT_SECRET: loadParam("JWT_SECRET"),
+
+  POSTGRES_DB_HOST: loadParam("POSTGRES_DB_HOST"),
+  POSTGRES_DB_USERNAME: loadParam("POSTGRES_DB_USERNAME"),
+  POSTGRES_DB_PASSWORD: loadParam("POSTGRES_DB_PASSWORD"),
+  POSTGRES_DB_NAME: loadParam("POSTGRES_DB_NAME"),
 });

@@ -6,8 +6,8 @@ import {
   HttpException,
   HttpStatus,
 } from "@nestjs/common";
-import CustomException from "src/exception/CustomException";
 import { LoggingService } from "../logging/logging.service";
+import { CustomException } from "./custom.exception";
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {

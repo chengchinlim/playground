@@ -6,6 +6,8 @@ import { AuthModule } from "./auth/auth.module";
 import { APP_GUARD } from "@nestjs/core";
 import { JwtAuthGuard } from "./auth/jwt.auth.guard";
 import { DefaultModule } from "./default/default.module";
+import { DatabaseModule } from "./database/database.module";
+import { ProductModule } from "./product/product.module";
 
 export interface RequestContextFields {
   requestId: string;
@@ -20,6 +22,8 @@ export interface RequestContextFields {
     RequestContextModule,
     AuthModule,
     DefaultModule,
+    DatabaseModule,
+    ProductModule,
   ],
   providers: [
     {
