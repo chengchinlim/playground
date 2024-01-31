@@ -8,6 +8,7 @@ import { JwtAuthGuard } from "./auth/jwt.auth.guard";
 import { DefaultModule } from "./default/default.module";
 import { DatabaseModule } from "./database/database.module";
 import { ProductModule } from "./product/product.module";
+import { UserModule } from "./user/user.module";
 
 export interface RequestContextFields {
   requestId: string;
@@ -24,6 +25,7 @@ export interface RequestContextFields {
     DefaultModule,
     DatabaseModule,
     ProductModule,
+    UserModule,
   ],
   providers: [
     {

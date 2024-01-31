@@ -13,6 +13,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
+  // token already decoded by library
   async validate(payload: any) {
     // decoded json validation logic
     return payload;
