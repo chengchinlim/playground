@@ -7,6 +7,7 @@
     "prebuild": "rimraf lib",
     "build": "nest build",
     "dev": "TZ=UTC cross-env NODE_ENV=local nest start --watch",
+    "worker": "TZ=UTC cross-env NODE_ENV=local node lib/temporal/temporal.worker.js",
     "lint": "eslint",
     "start": "node lib/main.js"
   },
@@ -26,6 +27,10 @@
     "@nestjs/schedule": "^3.0.4",
     "@nestjs/schematics": "^10.1.0",
     "@nestjs/testing": "^10.3.0",
+    "@temporalio/activity": "^1.9.3",
+    "@temporalio/client": "^1.9.3",
+    "@temporalio/worker": "^1.9.3",
+    "@temporalio/workflow": "^1.9.3",
     "axios": "^1.3.4",
     "bcrypt": "^5.1.1",
     "bull": "^4.11.3",
