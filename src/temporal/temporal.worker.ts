@@ -4,7 +4,7 @@ import * as activities from "./temporal.activities";
 
 async function bootstrap() {
   const worker = await Worker.create({
-    workflowsPath: require.resolve("./temporal.workflows.js"),
+    workflowsPath: require.resolve("./temporal.workflows"),
     activities,
     namespace: temporalNamespace,
     taskQueue: productTaskQueue,

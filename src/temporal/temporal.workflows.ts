@@ -1,7 +1,5 @@
-import { ProductService } from "../product/product.service";
-
-export const workflow = ProductService.prototype.execProductWorkFlow;
+import { execProductWorkFlow } from "../product/product.workflow";
 
 module.exports = {
-  workflow,
+  execProductWorkFlow,
 };

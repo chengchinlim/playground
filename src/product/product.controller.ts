@@ -2,6 +2,7 @@ import { Controller, Get, Post } from "@nestjs/common";
 import { ProductService } from "./product.service";
 import { TemporalService } from "../temporal/temporal.service";
 import { productTaskQueue } from "../temporal/temporal.constant";
+import { execProductWorkFlow } from "./product.workflow";
 
 @Controller("products")
 export class ProductController {
@@ -16,18 +17,14 @@ export class ProductController {
   }
 
   @Post("workflow")
-  async execProductWorkFlow() {
+  async workflow() {
     const temporalClient = await this.temporalService.getClient();
     const id = 10;
-    const handle = await temporalClient.start(
-      this.productService.execProductWorkFlow,
-      {
-        args: [id],
-        taskQueue: productTaskQueue,
-        workflowId:
-          "product-workflow-" + Math.random().toString(36).slice(2, 7),
-      },
-    );
+    const handle = await temporalClient.start(execProductWorkFlow, {
+      args: [id],
+      taskQueue: productTaskQueue,
+      workflowId: "product-workflow-" + Math.random().toString(36).slice(2, 7),
+    });
     return handle.workflowId;
   }
 }
