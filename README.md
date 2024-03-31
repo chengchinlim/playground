@@ -2,3 +2,4 @@
 
 - Winston logs
 - Custom exceptions
+- To run temporal locally, `temporal server start-dev`
