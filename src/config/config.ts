@@ -14,7 +14,7 @@ const loadParam = (paramName: string, defaultParam?: any): string => {
 
 export default () => ({
   NODE_ENV: process.env.NODE_ENV || "local",
-  PORT: parseInt(loadParam("PORT", 7778), 10),
+  PORT: parseInt(loadParam("PORT", 8082), 10),
 
   JWT_SECRET: loadParam("JWT_SECRET"),
 
@@ -22,4 +22,5 @@ export default () => ({
   POSTGRES_DB_USERNAME: loadParam("POSTGRES_DB_USERNAME"),
   POSTGRES_DB_PASSWORD: loadParam("POSTGRES_DB_PASSWORD"),
   POSTGRES_DB_NAME: loadParam("POSTGRES_DB_NAME"),
+  POSTGRES_DB_PORT: loadParam("POSTGRES_DB_PORT"),
 });

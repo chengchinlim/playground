@@ -9,7 +9,8 @@ import { DefaultModule } from "./default/default.module";
 import { DatabaseModule } from "./database/database.module";
 import { ProductModule } from "./product/product.module";
 import { UserModule } from "./user/user.module";
-import { TemporalModule } from "./temporal/temporal.module";
+import { TemporalModule } from "nestjs-temporal";
+import { productTaskQueue } from "./temporal/temporal.constant";
 
 export interface RequestContextFields {
   requestId: string;
@@ -27,7 +28,13 @@ export interface RequestContextFields {
     DatabaseModule,
     ProductModule,
     UserModule,
-    TemporalModule,
+    TemporalModule.registerWorker({
+      workerOptions: {
+        taskQueue: productTaskQueue,
+        workflowsPath: require.resolve("./product/product.workflow"),
+      },
+    }),
+    TemporalModule.registerClient(),
   ],
   providers: [
     {
