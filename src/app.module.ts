@@ -11,6 +11,7 @@ import { ProductModule } from "./product/product.module";
 import { UserModule } from "./user/user.module";
 import { TemporalModule } from "nestjs-temporal";
 import { productTaskQueue } from "./temporal/temporal.constant";
+import { TemporalMockModule } from "./test/temporal.mock";
 
 export interface RequestContextFields {
   requestId: string;
@@ -28,16 +29,17 @@ export interface RequestContextFields {
     DatabaseModule,
     ProductModule,
     UserModule,
-    /* Comment out temporal module
-     * because it requires a server which only works on localhost.
-     * */
-    // TemporalModule.registerWorker({
-    //   workerOptions: {
-    //     taskQueue: productTaskQueue,
-    //     workflowsPath: require.resolve("./product/product.workflow"),
-    //   },
-    // }),
-    // TemporalModule.registerClient(),
+    process.env.USE_TEMPORAL_MODULE === "1"
+      ? TemporalMockModule
+      : TemporalModule.registerWorker({
+          workerOptions: {
+            taskQueue: productTaskQueue,
+            workflowsPath: require.resolve("./product/product.workflow"),
+          },
+        }),
+    process.env.USE_TEMPORAL_MODULE === "1"
+      ? TemporalMockModule
+      : TemporalModule.registerClient(),
   ],
   providers: [
     {

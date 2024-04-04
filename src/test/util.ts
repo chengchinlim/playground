@@ -3,10 +3,20 @@ import {
   StartedPostgreSqlContainer,
 } from "@testcontainers/postgresql";
 import { Test, TestingModule } from "@nestjs/testing";
-import { AppModule } from "../app.module";
 import { INestApplication, Logger } from "@nestjs/common";
 import { DataSource } from "typeorm";
 import * as process from "process";
+import { ConfigsModule } from "../config/config.module";
+import { LoggingModule } from "../logging/logging.module";
+import { RequestContextModule } from "../logging/request.context.module";
+import { AuthModule } from "../auth/auth.module";
+import { DefaultModule } from "../default/default.module";
+import { DatabaseModule } from "../database/database.module";
+import { ProductModule } from "../product/product.module";
+import { UserModule } from "../user/user.module";
+import { TemporalMockModule } from "./temporal.mock";
+import { APP_GUARD } from "@nestjs/core";
+import { JwtAuthGuard } from "../auth/jwt.auth.guard";
 
 export class TestUtil {
   public app: INestApplication;
@@ -27,7 +37,23 @@ export class TestUtil {
     process.env.POSTGRES_DB_SYNC = "1";
 
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [
+        ConfigsModule,
+        LoggingModule,
+        RequestContextModule,
+        AuthModule,
+        DefaultModule,
+        DatabaseModule,
+        ProductModule,
+        UserModule,
+        TemporalMockModule,
+      ],
+      providers: [
+        {
+          provide: APP_GUARD,
+          useClass: JwtAuthGuard,
+        },
+      ],
     })
       .setLogger(new Logger())
       .compile();
