@@ -1,0 +1,30 @@
+name: Tests on PR
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    env:
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      POSTGRES_DB_HOST: ${{ secrets.POSTGRES_DB_HOST }}
+      POSTGRES_DB_USERNAME: ${{ secrets.POSTGRES_DB_USERNAME }}
+      POSTGRES_DB_PASSWORD: ${{ secrets.POSTGRES_DB_PASSWORD }}
+      POSTGRES_DB_NAME: ${{ secrets.POSTGRES_DB_NAME }}
+      POSTGRES_DB_PORT: ${{ secrets.POSTGRES_DB_PORT }}
+      POSTGRES_DB_SYNC: ${{ secrets.POSTGRES_DB_SYNC }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Docker
+        run: sudo apt-get install -y docker-compose
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Run tests
+        run: npm run test
+        env:
+          DEBUG: "testcontainers*"
