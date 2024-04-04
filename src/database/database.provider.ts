@@ -13,7 +13,7 @@ export const databaseProviders = [
         password: configService.get<string>("POSTGRES_DB_PASSWORD", "root"),
         database: configService.get<string>("POSTGRES_DB_NAME", "test"),
         entities: [__dirname + "/../**/*.entity{.ts,.js}"],
-        synchronize: false,
+        synchronize: configService.get<string>("POSTGRES_DB_SYNC", "0") === "1",
       });
       return dataSource.initialize();
     },

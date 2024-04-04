@@ -28,13 +28,16 @@ export interface RequestContextFields {
     DatabaseModule,
     ProductModule,
     UserModule,
-    TemporalModule.registerWorker({
-      workerOptions: {
-        taskQueue: productTaskQueue,
-        workflowsPath: require.resolve("./product/product.workflow"),
-      },
-    }),
-    TemporalModule.registerClient(),
+    /* Comment out temporal module
+     * because it requires a server which only works on localhost.
+     * */
+    // TemporalModule.registerWorker({
+    //   workerOptions: {
+    //     taskQueue: productTaskQueue,
+    //     workflowsPath: require.resolve("./product/product.workflow"),
+    //   },
+    // }),
+    // TemporalModule.registerClient(),
   ],
   providers: [
     {
