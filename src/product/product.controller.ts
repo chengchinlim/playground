@@ -10,7 +10,7 @@ import { Public } from "../decorator/public.decorator";
 export class ProductController {
   constructor(
     private readonly productService: ProductService,
-    @InjectTemporalClient() private readonly temporalClient: WorkflowClient,
+    // @InjectTemporalClient() private readonly temporalClient: WorkflowClient,
   ) {}
 
   @Get()
@@ -18,15 +18,15 @@ export class ProductController {
     return this.productService.getProductById(10);
   }
 
-  @Public()
-  @Post("workflow")
-  async workflow() {
-    const id = 10;
-    const handle = await this.temporalClient.start(execProductWorkFlow, {
-      args: [id],
-      taskQueue: productTaskQueue,
-      workflowId: "product-workflow-" + Math.random().toString(36).slice(2, 7),
-    });
-    return handle.workflowId;
-  }
+  // @Public()
+  // @Post("workflow")
+  // async workflow() {
+  //   const id = 10;
+  //   const handle = await this.temporalClient.start(execProductWorkFlow, {
+  //     args: [id],
+  //     taskQueue: productTaskQueue,
+  //     workflowId: "product-workflow-" + Math.random().toString(36).slice(2, 7),
+  //   });
+  //   return handle.workflowId;
+  // }
 }
