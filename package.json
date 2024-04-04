@@ -9,7 +9,7 @@
     "dev": "TZ=UTC cross-env NODE_ENV=local nest start --watch",
     "worker": "TZ=UTC cross-env NODE_ENV=local node lib/temporal/temporal.worker.js",
     "lint": "eslint",
-    "test": "TZ=UTC cross-env NODE_ENV=local jest --detectOpenHandles",
+    "test": "TZ=UTC NODE_ENV=local jest --detectOpenHandles",
     "start": "node lib/main.js"
   },
   "keywords": [],
