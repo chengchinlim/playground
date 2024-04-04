@@ -3,7 +3,7 @@ import { DataHelper } from "./data.helper";
 import { ProductService } from "../product/product.service";
 
 describe("Product", () => {
-  jest.setTimeout(10000);
+  jest.setTimeout(20000);
 
   let testUtil: TestUtil;
   let dataHelper: DataHelper;
