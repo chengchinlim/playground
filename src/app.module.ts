@@ -29,7 +29,7 @@ export interface RequestContextFields {
     DatabaseModule,
     ProductModule,
     UserModule,
-    process.env.USE_TEMPORAL_MODULE === "1"
+    process.env.USE_TEMPORAL_MOCK === "1"
       ? TemporalMockModule
       : TemporalModule.registerWorker({
           workerOptions: {
@@ -37,7 +37,7 @@ export interface RequestContextFields {
             workflowsPath: require.resolve("./product/product.workflow"),
           },
         }),
-    process.env.USE_TEMPORAL_MODULE === "1"
+    process.env.USE_TEMPORAL_MOCK === "1"
       ? TemporalMockModule
       : TemporalModule.registerClient(),
   ],
