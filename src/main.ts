@@ -65,7 +65,7 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
-  const port = configService.get<string>("PORT");
+  const port = process.env.PORT || configService.get<string>("PORT");
   await app.listen(port!);
   Logger.log(`🚀 Application is running on: http://localhost:${port}`);
 }
