@@ -1,10 +1,11 @@
-import { Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { ProductService } from "./product.service";
 import { InjectTemporalClient } from "nestjs-temporal";
 import { WorkflowClient } from "@temporalio/client";
 import { productTaskQueue } from "../temporal/temporal.constant";
 import { execProductWorkFlow } from "./product.workflow";
 import { Public } from "../decorator/public.decorator";
+import { CreateProductDTO } from "./product.dto";
 
 @Controller("products")
 export class ProductController {
@@ -14,9 +15,17 @@ export class ProductController {
     private readonly temporalClient: WorkflowClient,
   ) {}
 
-  @Get()
-  getProductById() {
-    return this.productService.getProductById(10);
+  @Post()
+  createProduct(@Body() createProductDTO: CreateProductDTO) {
+    return this.productService.addProduct(
+      createProductDTO.name,
+      createProductDTO.category,
+    );
+  }
+
+  @Get("/:id")
+  getProductById(@Param("id") id: number) {
+    return this.productService.getProductById(id);
   }
 
   @Public()

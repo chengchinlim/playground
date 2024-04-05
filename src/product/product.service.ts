@@ -2,6 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { ProductEntity } from "./product.entity";
 import { Activities, Activity } from "nestjs-temporal";
+import { ProductDTO } from "./product.dto";
 
 @Injectable()
 @Activities()
@@ -12,12 +13,26 @@ export class ProductService {
   ) {}
 
   @Activity()
-  async getProductById(id: number) {
-    return this.repo.findOne({
+  async getProductById(id: number): Promise<ProductDTO | null> {
+    const product = await this.repo.findOne({
       where: {
         id,
       },
     });
+    if (!product) {
+      return null;
+    }
+    return {
+      ...product,
+    };
+  }
+
+  async addProduct(name: string, category: string): Promise<ProductDTO> {
+    const product = await this.repo.save({
+      name,
+      category,
+    });
+    return { ...product };
   }
 }
 
