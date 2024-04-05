@@ -34,6 +34,14 @@ export class ProductService {
     });
     return { ...product };
   }
+
+  async updateProduct(
+    id: number,
+    name: string,
+    category: string,
+  ): Promise<void> {
+    await this.repo.update({ id }, { name, category });
+  }
 }
 
 export interface IGetProductByIdActivity {

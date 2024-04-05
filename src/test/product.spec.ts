@@ -15,13 +15,17 @@ describe("Product", () => {
     await testUtil.clearDbData();
   });
 
-  it("Add & get product", async () => {
+  it("CRUD", async () => {
     const productService = testUtil.app.get(ProductService);
     const product = await productService.addProduct("Product 1", "Category 1");
-    const result = await productService.getProductById(product.id);
+    let result = await productService.getProductById(product.id);
     expect(result).toBeDefined();
     expect(result!.id).toBe(product.id);
-    expect(result!.name).toBe(product.name);
+    expect(result!.name).toBe("Product 1");
+
+    await productService.updateProduct(product.id, "Product 1", "Category 2");
+    result = await productService.getProductById(product.id);
+    expect(result!.category).toBe("Category 2");
   });
 
   afterAll(async () => {
