@@ -42,6 +42,10 @@ export class ProductService {
   ): Promise<void> {
     await this.repo.update({ id }, { name, category });
   }
+
+  async deleteProduct(id: number): Promise<void> {
+    await this.repo.delete({ id });
+  }
 }
 
 export interface IGetProductByIdActivity {

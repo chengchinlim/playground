@@ -26,6 +26,10 @@ describe("Product", () => {
     await productService.updateProduct(product.id, "Product 1", "Category 2");
     result = await productService.getProductById(product.id);
     expect(result!.category).toBe("Category 2");
+
+    await productService.deleteProduct(product.id);
+    result = await productService.getProductById(product.id);
+    expect(result).toBeNull();
   });
 
   afterAll(async () => {

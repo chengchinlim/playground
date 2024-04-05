@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from "@nestjs/common";
 import { ProductService } from "./product.service";
 import { InjectTemporalClient } from "nestjs-temporal";
 import { WorkflowClient } from "@temporalio/client";
@@ -38,6 +46,11 @@ export class ProductController {
       updateProductDTO.name,
       updateProductDTO.category,
     );
+  }
+
+  @Delete("/:id")
+  deleteProductById(@Param("id") id: number) {
+    return this.productService.deleteProduct(id);
   }
 
   @Public()
