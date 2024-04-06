@@ -11,6 +11,7 @@ import { AppModule, RequestContextFields } from "./app.module";
 import { AllExceptionsFilter } from "./exception/any.exception.filter";
 import { ResponseInterceptor } from "./interceptor/response.interceptor";
 import { LoggingService } from "./logging/logging.service";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 // to map JS stack traces to TS source code
 sourceMapSupport.install();
 
@@ -65,6 +66,15 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle("Playground API")
+    .setDescription("Basic CRUD API for Playground")
+    .setVersion("1.0")
+    .build();
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup("doc", app, document);
+
   const port = process.env.PORT || configService.get<string>("PORT");
   await app.listen(port!);
   Logger.log(`🚀 Application is running on: http://localhost:${port}`);
