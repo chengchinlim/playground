@@ -1,29 +1,35 @@
 import { TestUtil } from "./util";
-import { DataHelper } from "./data.helper";
 import { ProductService } from "../product/product.service";
 
 describe("Product", () => {
   jest.setTimeout(20000);
 
   let testUtil: TestUtil;
-  let dataHelper: DataHelper;
 
   beforeAll(async () => {
     testUtil = new TestUtil();
     await testUtil.setupEnv();
-    dataHelper = new DataHelper(testUtil.dataSource);
   });
 
   beforeEach(async () => {
     await testUtil.clearDbData();
   });
 
-  it("Should get product", async () => {
-    const product = await dataHelper.addProduct();
+  it("CRUD", async () => {
     const productService = testUtil.app.get(ProductService);
-    const result = await productService.getProductById(product.id);
-    expect(result?.id).toBe(product.id);
-    expect(result?.name).toBe(product.name);
+    const product = await productService.addProduct("Product 1", "Category 1");
+    let result = await productService.getProductById(product.id);
+    expect(result).toBeDefined();
+    expect(result!.id).toBe(product.id);
+    expect(result!.name).toBe("Product 1");
+
+    await productService.updateProduct(product.id, "Product 1", "Category 2");
+    result = await productService.getProductById(product.id);
+    expect(result!.category).toBe("Category 2");
+
+    await productService.deleteProduct(product.id);
+    result = await productService.getProductById(product.id);
+    expect(result).toBeNull();
   });
 
   afterAll(async () => {
