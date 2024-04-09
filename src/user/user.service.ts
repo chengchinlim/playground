@@ -37,4 +37,29 @@ export class UserService {
     };
     return jwt.sign(payload, this.configService.get("JWT_SECRET") as string);
   }
+
+  async generateResetPasswordToken(username: string) {
+    const user = await this.repo.findOneOrFail({
+      where: { username },
+    });
+    return jwt.sign(
+      { username: user.username },
+      this.configService.get("JWT_SECRET") as string,
+      {
+        expiresIn: "1h", // expires in 1 hour
+      },
+    );
+  }
+
+  async update(username: string, password: string) {
+    const passwordHash = await bcrypt.hash(password, 10);
+    await this.repo.update(
+      {
+        username,
+      },
+      {
+        password: passwordHash,
+      },
+    );
+  }
 }

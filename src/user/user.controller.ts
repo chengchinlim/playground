@@ -23,4 +23,21 @@ export class UserController {
   ) {
     return this.userService.login(username, password);
   }
+
+  /* Real implementation should require an email in the body parameters
+   * so the server can send the reset link to their email
+   * */
+  @Public()
+  @Post("/password-reset/init")
+  async initPasswordReset(@Body("username") username: string) {
+    return this.userService.generateResetPasswordToken(username);
+  }
+
+  @Post("/password-reset")
+  async resetPassword(
+    @Body("username") username: string,
+    @Body("newPassword") newPassword: string,
+  ) {
+    return this.userService.update(username, newPassword);
+  }
 }
