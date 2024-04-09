@@ -3,6 +3,7 @@
 - Basic CRUD endpoints
 - Winston logs
 - Custom exceptions
+- JWT token authentication (Register, log in, reset password)
 - Swagger docs for APIs
     - Run localhost and go to /doc for Swagger documentation
 - GitHub actions to run tests before PR
