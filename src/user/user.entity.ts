@@ -8,4 +8,7 @@ export class UserEntity extends BaseEntity {
 
   @Column()
   password: string;
+
+  @Column({ nullable: true })
+  authToken?: string;
 }
