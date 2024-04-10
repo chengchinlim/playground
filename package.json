@@ -10,7 +10,9 @@
     "worker": "TZ=UTC cross-env NODE_ENV=local node lib/temporal/temporal.worker.js",
     "lint": "eslint",
     "test": "TZ=UTC NODE_ENV=local jest --detectOpenHandles",
-    "start": "node lib/main.js"
+    "start": "node lib/main.js",
+    "typeorm": "cross-env NODE_ENV=local ts-node --files -r tsconfig-paths/register ./node_modules/typeorm/cli.js -d ./ormconfig.ts",
+    "db:migrate": "npm run typeorm migration:run"
   },
   "keywords": [],
   "author": "",
