@@ -1,20 +1,21 @@
-import { Injectable } from '@nestjs/common';
-import * as winston from 'winston';
-import { AsyncLocalStorage } from 'node:async_hooks';
-import { RequestContextFields } from '../app.module';
+import { Injectable } from "@nestjs/common";
+import * as winston from "winston";
+import { AsyncLocalStorage } from "node:async_hooks";
+import { RequestContextFields } from "./request.context.service";
 
 export type TJobStatus =
-  | 'active'
-  | 'completed'
-  | 'stalled'
-  | 'waiting'
-  | 'removed'
-  | 'cleaned';
+  | "active"
+  | "completed"
+  | "stalled"
+  | "waiting"
+  | "removed"
+  | "cleaned";
 
 @Injectable()
 export class LoggingService {
   private errorLogger: winston.Logger;
   private infoLogger: winston.Logger;
+
   constructor(
     private readonly requestContextStorage: AsyncLocalStorage<RequestContextFields>,
   ) {
@@ -40,7 +41,7 @@ export class LoggingService {
     this.infoLogger.info(message, this.requestContextStorage.getStore());
   }
 
-  logRequest(status: 'Start' | 'End', data: unknown) {
+  logRequest(status: "Start" | "End", data: unknown) {
     this.infoLogger.info(
       `Request ${status}s`,
       Object.assign({}, this.requestContextStorage.getStore(), data),

@@ -21,6 +21,12 @@ export class UserService {
     });
   }
 
+  async validateUser(id: number, username: string) {
+    return this.repo.findOneOrFail({
+      where: { id, username },
+    });
+  }
+
   async login(username: string, password: string) {
     const user = await this.repo.findOneOrFail({
       where: { username },
@@ -32,10 +38,16 @@ export class UserService {
     }
 
     const payload = {
+      id: user.id,
       username: user.username,
       password: user.password,
     };
-    return jwt.sign(payload, this.configService.get("JWT_SECRET") as string);
+    const token = jwt.sign(
+      payload,
+      this.configService.get("JWT_SECRET") as string,
+    );
+    await this.repo.update(user.id, { authToken: token });
+    return token;
   }
 
   async generateResetPasswordToken(username: string) {

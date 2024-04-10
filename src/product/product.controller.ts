@@ -15,6 +15,7 @@ import { execProductWorkFlow } from "./product.workflow";
 import { Public } from "../decorator/public.decorator";
 import { CreateProductDTO, ProductDTO, UpdateProductDTO } from "./product.dto";
 import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
+import { LoggingService } from "../logging/logging.service";
 
 @ApiTags("Products")
 @Controller("products")
@@ -23,6 +24,7 @@ export class ProductController {
     private readonly productService: ProductService,
     @InjectTemporalClient()
     private readonly temporalClient: WorkflowClient,
+    private readonly loggingService: LoggingService,
   ) {}
 
   @Post()
@@ -43,6 +45,7 @@ export class ProductController {
     description: "Successfully retrieved product",
   })
   getProductById(@Param("id") id: number) {
+    this.loggingService.logMessage(`Retrieving product ${id}...`);
     return this.productService.getProductById(id);
   }
 

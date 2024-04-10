@@ -7,11 +7,12 @@ import { WinstonModule, utilities } from "nest-winston";
 import { AsyncLocalStorage } from "node:async_hooks";
 import * as sourceMapSupport from "source-map-support";
 import * as winston from "winston";
-import { AppModule, RequestContextFields } from "./app.module";
+import { AppModule } from "./app.module";
 import { AllExceptionsFilter } from "./exception/any.exception.filter";
 import { ResponseInterceptor } from "./interceptor/response.interceptor";
 import { LoggingService } from "./logging/logging.service";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { RequestContextFields } from "./logging/request.context.service";
 // to map JS stack traces to TS source code
 sourceMapSupport.install();
 

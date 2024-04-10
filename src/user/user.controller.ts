@@ -1,7 +1,11 @@
 import { Body, Controller, Post } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { Public } from "../decorator/public.decorator";
-import { CreateUserDTO } from "./user.dto";
+import {
+  CreateUserDTO,
+  PasswordResetInitDTO,
+  ResetPasswordDTO,
+} from "./user.dto";
 import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 
 @ApiTags("Users")
@@ -39,15 +43,17 @@ export class UserController {
    * */
   @Public()
   @Post("/password-reset/init")
-  async initPasswordReset(@Body("username") username: string) {
-    return this.userService.generateResetPasswordToken(username);
+  async initPasswordReset(@Body() passwordResetInitDTO: PasswordResetInitDTO) {
+    return this.userService.generateResetPasswordToken(
+      passwordResetInitDTO.username,
+    );
   }
 
   @Post("/password-reset")
-  async resetPassword(
-    @Body("username") username: string,
-    @Body("newPassword") newPassword: string,
-  ) {
-    return this.userService.update(username, newPassword);
+  async resetPassword(@Body() updateUserDTO: ResetPasswordDTO) {
+    return this.userService.update(
+      updateUserDTO.username,
+      updateUserDTO.newPassword,
+    );
   }
 }
