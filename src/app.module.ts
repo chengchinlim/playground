@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { ConfigsModule } from "./config/config.module";
 import { LoggingModule } from "./logging/logging.module";
 import { RequestContextModule } from "./logging/request.context.module";
@@ -12,12 +12,10 @@ import { UserModule } from "./user/user.module";
 import { TemporalModule } from "nestjs-temporal";
 import { productTaskQueue } from "./temporal/temporal.constant";
 import { TemporalMockModule } from "./test/temporal.mock";
-
-export interface RequestContextFields {
-  requestId: string;
-  userId?: string;
-  phoneNumber?: string;
-}
+import { AsyncLocalStorage } from "node:async_hooks";
+import { RequestContextFields } from "./logging/request.context.service";
+import { NextFunction } from "express";
+import { v4 as uuid } from "uuid";
 
 @Module({
   imports: [
@@ -48,6 +46,19 @@ export interface RequestContextFields {
     },
   ],
 })
-export class AppModule {
-  constructor() {}
+export class AppModule implements NestModule {
+  constructor(
+    private readonly requestContextStorage: AsyncLocalStorage<RequestContextFields>,
+  ) {}
+
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply((req: Request, res: Response, next: NextFunction) => {
+        const store: RequestContextFields = {
+          requestId: uuid(),
+        };
+        this.requestContextStorage.run(store, () => next());
+      })
+      .forRoutes("*");
+  }
 }

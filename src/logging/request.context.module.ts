@@ -1,6 +1,6 @@
-import { Global, Module } from '@nestjs/common';
-import { AsyncLocalStorage } from 'node:async_hooks';
-import { RequestContextService } from './request.context.service';
+import { Global, Module } from "@nestjs/common";
+import { AsyncLocalStorage } from "node:async_hooks";
+import { RequestContextService } from "./request.context.service";
 
 @Global()
 @Module({

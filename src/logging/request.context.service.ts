@@ -1,6 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { AsyncLocalStorage } from "node:async_hooks";
-import { RequestContextFields } from "../app.module";
+
+export interface RequestContextFields {
+  requestId: string;
+  id?: number;
+  username?: string;
+}
 
 @Injectable()
 export class RequestContextService {
@@ -9,6 +14,6 @@ export class RequestContextService {
   ) {}
 
   isLogin(): boolean {
-    return !!this.requestContextStorage.getStore()!.userId;
+    return !!this.requestContextStorage.getStore()!.id;
   }
 }
